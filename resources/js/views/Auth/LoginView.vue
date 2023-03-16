@@ -1,53 +1,71 @@
 <template>
     <auth-layout title="Sign in to your account">
-            <form class="space-y-4 md:space-y-6" action="#">
-                <div>
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
-                        email</label>
-                    <input type="email" name="email" id="email"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-main-700 dark:border-main-300 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-main-500"
-                           placeholder="name@company.com" required="">
-                </div>
-                <div>
-                    <label for="password"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                    <input type="password" name="password" id="password" placeholder="••••••••"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-main-700 dark:border-main-300 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-main-500"
-                           required="">
-                </div>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input id="remember" aria-describedby="remember" type="checkbox"
-                                   class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-main-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                                   required="">
-                        </div>
-                        <div class="ml-3 text-sm">
-                            <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
-                        </div>
+        <form class="space-y-4 md:space-y-6" @submit.prevent="login">
+            <default-input v-model="credentials.email" id="email" type="email" placeholder="name@company.com" :errors="errors.email">
+                Your email
+            </default-input>
+            <default-input v-model="credentials.password" id="password" type="password" placeholder="••••••••" :errors="errors.password">
+                Password
+            </default-input>
+            <div class="flex items-center justify-between">
+                <div class="flex items-start">
+                    <div class="flex items-center h-5">
+                        <input id="remember" aria-describedby="remember" type="checkbox"
+                               class="w-4 h-4 border rounded focus:ring-3 bg-main-700 border-gray-600 focus:ring-primary-600 ring-offset-gray-800"
+                        >
                     </div>
-                    <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-gray-300">Forgot
-                        password?</a>
+                    <div class="ml-3 text-sm">
+                        <label for="remember" class="text-gray-300">Remember me</label>
+                    </div>
                 </div>
-                <button type="submit"
-                        class="w-full text-white bg-main-800 hover:bg-main-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-main-600 dark:hover:bg-main-700 dark:focus:ring-main-800">
-                    Sign in
-                </button>
-                <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                    Don’t have an account yet?                 <router-link :to="{name: 'register'}"
-                                                                            class="font-medium text-primary-600 hover:underline dark:text-gray-300">
+                <a href="#" class="text-sm font-medium hover:underline text-gray-300">Forgot
+                    password?</a>
+            </div>
+            <gray-button :isDisabled="!isFilled">
+                Sign in
+            </gray-button>
+            <p class="text-sm font-light text-gray-400">
+                Don’t have an account yet?
+                <router-link :to="{name: 'register'}"
+                             class="font-medium hover:underline text-gray-300">
                     Sign up
                 </router-link>
-                </p>
-            </form>
+            </p>
+        </form>
     </auth-layout>
 </template>
 
 <script>
 import AuthLayout from "@/components/Layouts/AuthLayout.vue";
+import GrayButton from "@/components/Buttons/GrayButton.vue";
+import useUser from "@/composables/user";
+import {computed, reactive} from "vue";
+import DefaultInput from "@/components/Form/DefaultInput.vue";
+
 
 export default {
     name: "LoginView",
-    components: {AuthLayout},
+    components: {DefaultInput, GrayButton, AuthLayout},
+    setup() {
+        const {attempt, errors} = useUser()
+
+        const credentials = reactive({
+            email: '',
+            password: '',
+        })
+
+
+        const isFilled = computed(() => {
+            return credentials.email && credentials.password
+        })
+
+        function login() {
+            if (isFilled) {
+                attempt(credentials)
+            }
+        }
+
+        return {credentials, errors, isFilled, login}
+    }
 }
 </script>
