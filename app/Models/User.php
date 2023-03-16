@@ -51,6 +51,7 @@ class User extends Authenticatable
 
         static::creating(function (User $user){
             $user->slug = $user->slug??str($user->username)->slug();
+            $user->name = $user->name??str($user->username)->ucfirst();
         });
     }
 }
