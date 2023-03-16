@@ -44,4 +44,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (User $user){
+            $user->slug = $user->slug??str($user->username)->slug();
+        });
+    }
 }
