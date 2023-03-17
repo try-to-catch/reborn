@@ -42,9 +42,8 @@ export default function useUser() {
         user.value = response.data.data
         localStorage.setItem('x_xsrf_token', response.config.headers['X-XSRF-TOKEN'])
 
-        router.push({name: 'home'})
+        router.push({name: 'chats.index'})
     }
-
 
 
     return {user, errors, attempt, create}
