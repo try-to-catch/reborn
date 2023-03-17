@@ -8,18 +8,6 @@
 </head>
 <body class="h-screen">
 @yield('content')
-<style>
-    ::-webkit-scrollbar {
-        width: 7px;
-        background-color: #2b2d32;
-        border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background-color: #222427;
-        border-radius: 10px;
-    }
-</style>
 </body>
 
 </html>
