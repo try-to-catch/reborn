@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -49,9 +50,15 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::creating(function (User $user){
-            $user->slug = $user->slug??str($user->username)->slug();
-            $user->name = $user->name??str($user->username)->ucfirst();
+        static::creating(function (User $user) {
+            $user->slug = $user->slug ?? str($user->username)->slug();
+            $user->name = $user->name ?? str($user->username)->ucfirst();
+            $user->username = '@' . $user->username;
         });
+    }
+
+    public function chats(): BelongsToMany
+    {
+        return $this->belongsToMany(Chat::class);
     }
 }
