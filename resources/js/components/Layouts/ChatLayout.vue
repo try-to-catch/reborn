@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-main-900 text-white flex flex-col h-screen">
+    <div v-if="!isPageLoading" class="bg-main-900 text-white flex flex-col h-screen">
         <header class="basis-[36px] flex content-end">
             <div class="text-lg mt-1.5 ml-2.5">reborn</div>
         </header>
@@ -47,11 +47,30 @@
             </div>
         </main>
     </div>
+    <div v-else class="bg-gray-50 dark:bg-main-900">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
+            <div class="flex items-center mb-6 text-2xl font-semibold text-white">
+                <LogoIcon></LogoIcon>
+                <span class="ml-2">
+                    Reborn
+                </span>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
+import LogoIcon from "@/components/Icons/LogoIcon.vue";
+
 export default {
-    name: "ChatLayout"
+    name: "ChatLayout",
+    components: {LogoIcon},
+    props: {
+        isPageLoading: {
+            type: Boolean,
+            default: false
+        }
+    }
 }
 </script>
 
