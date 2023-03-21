@@ -8,6 +8,7 @@ use App\Http\Resources\API\UserResource;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
@@ -20,6 +21,8 @@ class RegisterController extends Controller
 
         try {
             $user = User::query()->create($data);
+
+            Auth::login($user);
         } catch (Exception $e) {
             return response()->json($e, 401);
         }
