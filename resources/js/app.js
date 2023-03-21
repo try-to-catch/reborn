@@ -1,20 +1,18 @@
 import './bootstrap';
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import './../css/app.css'
 import App from './App.vue'
 import router from "@/router"
-import store from "@/store";
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUserGroup } from '@fortawesome/free-solid-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import {faUserGroup} from '@fortawesome/free-solid-svg-icons'
 
 const app = createApp({})
 
 library.add(faUserGroup)
 
 app.component('App', App)
-.component('font-awesome-icon', FontAwesomeIcon)
-.use(router)
-.use(store)
-.mount('#app')
+    .component('font-awesome-icon', FontAwesomeIcon)
+    .use(router)
+    .mount('#app')
