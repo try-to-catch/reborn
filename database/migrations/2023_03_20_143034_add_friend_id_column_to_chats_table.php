@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('chats', function (Blueprint $table) {
-            $table->string('thumbnail')->after('id');
+            $table->foreignId('friend_id')
+                ->constrained('users')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();;
         });
     }
 
@@ -22,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('chats', function (Blueprint $table) {
-            $table->dropColumn('thumbnail');
+            $table->dropColumn('friend_id');
         });
     }
 };
