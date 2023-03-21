@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\API;
+namespace App\Http\Resources\API\Chat;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ChatCollection extends ResourceCollection
+class ChatMinCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,9 +14,6 @@ class ChatCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return [
-          'id' => $this->id,
-          'thumbnail' => $this->thumbnail,
-        ];
+        return parent::toArray($request);
     }
 }
