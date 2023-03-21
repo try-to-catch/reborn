@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API;
 
+use App\Http\Resources\API\Chat\ChatMinCollection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,8 +21,8 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'bio' => $this->bio ?? null,
             'created_at' => $this->created_at,
-            'thumbnail' => $this->thumbnail,
-            'chats' => $this->chats
+            'thumbnail' => '/storage/'.$this->thumbnail,
+            'chats' => new ChatMinCollection($this->chats)
         ];
     }
 }
