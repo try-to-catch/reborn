@@ -15,6 +15,14 @@ const routes = [
         }
     },
     {
+        path: '/chats/:id',
+        component: () => import("@/views/Chat/ShowView.vue"),
+        name: 'chats.show',
+        meta: {
+            middleware: 'auth'
+        }
+    },
+    {
         path: '/login',
         component: () => import("@/views/Auth/LoginView.vue"),
         name: 'login',
