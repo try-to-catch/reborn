@@ -6,11 +6,11 @@ import router from "@/router"
 
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {faUserGroup} from '@fortawesome/free-solid-svg-icons'
+import {faGear, faUserGroup} from '@fortawesome/free-solid-svg-icons'
 
 const app = createApp({})
 
-library.add(faUserGroup)
+library.add(faUserGroup, faGear)
 
 app.component('App', App)
     .component('font-awesome-icon', FontAwesomeIcon)
