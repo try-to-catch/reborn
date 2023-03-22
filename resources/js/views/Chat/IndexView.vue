@@ -1,14 +1,12 @@
 <template>
-    <ChatLayout :isPageLoading="isLoading">
+    <ChatLayout>
         <template #middleSection>
-            <div :class="$style['chat-block-header']"
-                 class="border-b border-main-900 h-12 absolute inset-x-0 top-0 bg-main-500">
+            <div class=" chat-block-header border-b border-main-900 h-14 absolute inset-x-0 top-0 bg-main-500">
                 his
             </div>
-            <div class="px-2">
+            <div class="px-2 relative h-full flex flex-col">
                 <ul
-                    :class="$style['chat-block']"
-                    class="chat-block flex grow flex-col-reverse space-y-2 space-y-reverse overflow-auto px-2 2xl:px-4 pt-[60px]">
+                    class="chat-block flex grow flex-col-reverse space-y-2 space-y-reverse overflow-auto px-2 2xl:px-4 mt-[80px]">
                     <li class="flex">
                         <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
                         <div class="ml-2">
@@ -58,125 +56,7 @@
                             <div class="text-sm">Погнали, сколько можно</div>
                         </div>
                     </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
-                        <div class="ml-2">
-                            <div class="text-md">Schaste</div>
-                            <div class="text-sm">Погнали, сколько можно</div>
-                        </div>
-                    </li>
+
                 </ul>
                 <div class="basis-10 py-5 w-full flex px-2 2xl:px-4 ">
             <textarea tabindex="0" class="w-full h-auto bg-main-300 rounded-[5px] outline-none px-3 h-[36px] max-h-[200px] pt-1.5 resize-none border-0 focus:ring-0 focus-visible:ring-0 overflow-y-hidden
@@ -187,7 +67,6 @@
                     </div>
                 </div>
             </div>
-
         </template>
 
         <template #rightSection>
@@ -213,29 +92,5 @@
 
 <script setup>
 import ChatLayout from "@/components/Layouts/ChatLayout.vue";
-import useUser from "@/composables/user";
-
-const {user, isLoading} = useUser()
 </script>
 
-<style module lang="scss">
-.chat-block {
-    max-height: calc(100vh - 110px);
-
-    &::-webkit-scrollbar {
-        width: 7px;
-        background-color: #2b2d32;
-        border-radius: 10px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: #222427;
-        border-radius: 10px;
-    }
-}
-
-.chat-block-header {
-    z-index: 1;
-    box-shadow: 0 4px 0.3em rgba(0, 0, 0, 0.46);
-}
-</style>
