@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!isLoading" class="bg-main-900 text-white flex flex-col h-screen">
+    <div v-if="!isLoading " class="bg-main-900 text-white flex flex-col h-screen">
         <header class="basis-[36px] flex content-end">
             <div class="text-lg mt-1.5 ml-2.5">reborn</div>
         </header>
@@ -35,7 +35,7 @@
                                      class="w-full relative py-2 px-3 flex items-center hover:bg-main-500 rounded hover:text-gray-200">
 
                             <div class="bg-white w-8 h-8 rounded-full bg-gray-200"><img class="scale-105"
-                                                                                        src="/storage/images/profile_pictures/default.svg"
+                                                                                        :src="chat.friend_thumbnail"
                                                                                         alt="friend_icon"></div>
                             <div class="ml-4  font-medium">{{ chat.friend_name }}</div>
                             <div v-show="activeCross === chat.id" role="button"
@@ -57,10 +57,10 @@
                 </div>
             </div>
             <div class="bg-main-500 grow flex flex-col relative">
-                <slot name="middleSection"/>
+                <slot name="middleSection" :user="user"/>
             </div>
             <div class="bg-main-700 2xl:basis-[315px] basis-[265px] hidden xl:flex xl:flex-col px-5 z-10">
-                <slot name="rightSection"/>
+                <slot name="rightSection" :user="user"/>
             </div>
         </main>
     </div>
@@ -82,12 +82,6 @@ import useUser from "@/composables/user";
 import {ref} from "vue";
 import {useRoute} from "vue-router";
 
-// const props = defineProps({
-//     isPageLoading: {
-//         type: Boolean,
-//         default: false
-//     }
-// })
 const route = useRoute()
 const activeCross = ref(0)
 
@@ -99,14 +93,13 @@ function hideCross() {
     activeCross.value = 0
 }
 
-// const currentChatId =
 
 const {user, isLoading} = useUser()
 </script>
 
 <style lang="scss">
 .chat-block {
-    max-height: calc(100vh - 190px);
+    max-height: calc(100vh - 170px);
 
     &::-webkit-scrollbar {
         width: 7px;
@@ -122,6 +115,6 @@ const {user, isLoading} = useUser()
 
 .chat-block-header {
     z-index: 1;
-    box-shadow: 0 4px 0.3em rgba(0, 0, 0, 0.46);
+    box-shadow: 0 4px 0.3em rgba(0, 0, 0, 0.25);
 }
 </style>
