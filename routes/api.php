@@ -15,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 Route::middleware('auth:sanctum')->group(function (){
     Route::post('/user', \App\Http\Controllers\API\User\IndexController::class);
+    Route::post('/chats/{chat}', \App\Http\Controllers\API\Chat\ShowController::class);
 });
