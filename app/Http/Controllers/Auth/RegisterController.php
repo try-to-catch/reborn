@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterFormRequest;
-use App\Http\Resources\API\UserResource;
+use App\Http\Resources\API\User\UserResource;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\API;
+namespace App\Http\Resources\API\User;
 
 use App\Http\Resources\API\Chat\ChatMinCollection;
 use Illuminate\Http\Request;
@@ -16,6 +16,7 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'username' => $this->username,
             'email' => $this->email,

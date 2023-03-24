@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\API\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\UserResource;
+use App\Http\Resources\API\User\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
 {
