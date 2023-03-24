@@ -6,7 +6,7 @@
             </div>
             <div class="px-2 relative h-full flex flex-col">
                 <ul
-                    class="chat-block flex grow flex-col-reverse space-y-2 space-y-reverse overflow-auto px-2 2xl:px-4 mt-[80px]">
+                    class="chat-block flex grow flex-col-reverse space-y-2 space-y-reverse overflow-auto px-2 2xl:px-4 mt-[60px]">
                     <li class="flex">
                         <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200"></div>
                         <div class="ml-2">
