@@ -7,9 +7,9 @@
                 <span class="ml-2">{{ preparedUsername }}</span>
             </div>
             <div class="px-2 relative h-full flex flex-col">
-                <div class="chat-block flex grow flex-col-reverse mt-[60px]">
+                <div class="flex grow flex-col-reverse mt-[60px]">
                     <ul
-                        class="space-y-6 overflow-auto px-2 2xl:px-4">
+                        class=" chat-block space-y-6 overflow-auto px-2 2xl:px-4">
 
                         <li v-for="messageGroup in preparedChat" :key="messageGroup.id" class="flex">
                             <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200">
@@ -21,26 +21,47 @@
                                     class="text-md">
                                     <template v-if="messageGroup.user_id===user.id">{{ user.name }}</template>
                                     <template v-else>{{ chat.friend.name }}</template>
-                                    <span class="ml-2 text-zinc-500" style="font-size: 11px">{{ messageGroup.sent_at }}</span>
+                                    <span class="ml-2 text-zinc-500" style="font-size: 11px">{{
+                                            messageGroup.sent_at
+                                        }}</span>
                                 </div>
-                                <div v-for="messageItem in messageGroup.messageList"
+                                <div v-for="messageItem in messageGroup.messageList" :key="messageItem.id"
                                      class="text-sm text-gray-300 space-y-2">
                                     {{ messageItem.text }}
                                 </div>
                             </div>
                         </li>
+                        <li v-if="pendingMessages.length"
+                            :style="{'margin-top':lastMessage.user_id===user.id?'0':'24px'} " class="flex">
+                            <div :class="{ invisible: lastMessage.user_id===user.id }"
+                                 class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200">
+                                <img :src="user.thumbnail" alt="user_icon">
+                            </div>
+                            <div class="ml-2">
+                                <div v-show="lastMessage.user_id!==user.id" class="text-md">
+                                    {{ user.name }}
 
+                                    <span class="ml-2 text-zinc-500" style="font-size: 11px">just now</span>
+                                </div>
+                                <div v-for="text in pendingMessages"
+                                     class="text-sm text-gray-400 space-y-2">
+                                    {{ text }}
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
 
-                <div class="basis-10 py-5 w-full flex px-2 2xl:px-4 ">
-            <textarea v-model="newMessage" tabindex="0" class="w-full h-auto bg-main-300 rounded-[5px] outline-none px-3 min-h-[36px] max-h-[200px] pt-1.5 resize-none border-0 focus:ring-0 focus-visible:ring-0 overflow-y-hidden
-            " rows="1"></textarea>
-                    <div
+                <form @submit.prevent="sendMessage" class="basis-10 py-5 w-full flex px-2 2xl:px-4">
+                    <textarea @keydown.enter.prevent="sendMessage" v-model="newMessage" tabindex="0"
+                              class="w-full h-auto bg-main-300 rounded-[5px] outline-none px-3 min-h-[36px] max-h-[200px] pt-1.5 resize-none border-0 focus:ring-0 focus-visible:ring-0 overflow-y-hidden"
+                              rows="1"></textarea>
+                    <button
+                        type="submit"
                         class=" ml-2 bg-main-700 rounded-[5px] h-[36px] px-8 flex items-center text-gray-200 font-medium 2xl:hidden">
                         Send
-                    </div>
-                </div>
+                    </button>
+                </form>
             </div>
         </template>
 
@@ -80,7 +101,7 @@ import useChat from "@/composables/chat";
 import {computed, ref} from "vue";
 
 
-const {chat, isLoading} = useChat()
+const {chat, isLoading, createMessage, pendingMessages} = useChat()
 
 const preparedUsername = computed(() => {
     return chat.friend?.username.slice(1) || '';
@@ -90,7 +111,6 @@ const preparedChat = computed(() => {
     if (!chat.messages) {
         return []
     }
-
     const messages = []
 
     chat.messages.map((val, id) => {
@@ -106,6 +126,17 @@ const preparedChat = computed(() => {
     return messages || [];
 })
 
-
 const newMessage = ref('')
+function sendMessage() {
+    if (newMessage.value.length) {
+        createMessage(newMessage.value)
+
+        newMessage.value = ''
+    }
+}
+
+const lastMessage = computed(() => {
+    return chat.messages[chat.messages.length - 1]
+})
+
 </script>
