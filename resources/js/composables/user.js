@@ -56,7 +56,7 @@ export default function useUser() {
     async function getUser() {
         isLoading.value = true
 
-        const userData = await axios.post('/api/user').then(r => r.data.data)
+        const userData = await axios.get('/api/user').then(r => r.data.data)
 
         isLoading.value = false
 
