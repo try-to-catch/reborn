@@ -1,4 +1,4 @@
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, reactive, ref, watchEffect} from "vue";
 import axios from "axios";
 import {onBeforeRouteUpdate, useRoute} from "vue-router";
 
@@ -40,13 +40,19 @@ export default function useChat() {
         await axios.post(`/api/messages/${chat.id}`, {text}).then((res) => {
             const deliveredMessage = res.data.data
 
-            chat.messages.push(deliveredMessage)
-
             pendingMessages.value = pendingMessages.value.filter((message) => {
                 return message !== deliveredMessage.text
             })
         })
     }
 
+    watchEffect(()=>{
+        if (chat.id){
+            Echo.private(`chats.${chat.id}`)
+                .listen('MessageSent', (e) => {
+                    chat.messages.push(e.message)
+                });
+        }
+    })
     return {isLoading, chat, createMessage, pendingMessages}
 }
