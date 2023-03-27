@@ -8,8 +8,8 @@
             </div>
             <div class="px-2 relative h-full flex flex-col">
                 <div class="flex grow flex-col-reverse mt-[60px]">
-                    <ul
-                        class=" chat-block space-y-6 overflow-auto px-2 2xl:px-4">
+                    <ul ref="scrollContainer"
+                        class="chat-block space-y-6 overflow-auto px-2 2xl:px-4">
 
                         <li v-for="messageGroup in preparedChat" :key="messageGroup.id" class="flex">
                             <div class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200">
@@ -98,7 +98,7 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import ChatLayout from "@/components/Layouts/ChatLayout.vue";
 import useChat from "@/composables/chat";
-import {computed, ref} from "vue";
+import {computed, nextTick, ref, watch, watchEffect} from "vue";
 
 
 const {chat, isLoading, createMessage, pendingMessages} = useChat()
@@ -138,5 +138,25 @@ function sendMessage() {
 const lastMessage = computed(() => {
     return chat.messages[chat.messages.length - 1]
 })
+
+
+const scrollContainer = ref(null);
+
+watch(preparedChat, async()=>{
+    if (preparedChat && Boolean(scrollContainer.value)){
+        await nextTick()
+        updateScrollHeight()
+    }
+})
+
+watchEffect(() => {
+    if (scrollContainer.value) {
+        updateScrollHeight()
+    }
+})
+
+function updateScrollHeight(){
+    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight - scrollContainer.value.clientHeight;
+}
 
 </script>
