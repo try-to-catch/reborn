@@ -13,9 +13,14 @@ class ShowController extends Controller
      */
     public function __invoke(Chat $chat): ChatResource
     {
-        $chatData = $chat->select('id')->with(['messages', 'users' => function ($query) {
-            $query->where('users.id', '!=', request()->user()->id);
-        }])->find($chat->id);
+        $chatData = $chat->select('id')
+            ->with([
+                'messages' => function ($query) {
+                    $query->limit(150);
+                },
+                'users' => function ($query) {
+                    $query->where('users.id', '!=', request()->user()->id);
+                }])->find($chat->id);
 
         return new ChatResource($chatData);
     }
