@@ -6,7 +6,6 @@ export default function useUser() {
     const router = useRouter()
 
     const errors = ref([])
-    const user = reactive({})
 
     const isLoading = ref(false)
 
@@ -29,7 +28,7 @@ export default function useUser() {
     function handleFulfilled(response) {
         localStorage.setItem('x_xsrf_token', response.config.headers['X-XSRF-TOKEN'])
 
-        setUser(response.data.data)
+        Object.assign(user, response.data.data);
         router.push({name: 'chats.index'});
     }
 
@@ -38,30 +37,29 @@ export default function useUser() {
     }
 
 
+    const user = reactive({})
+
+    async function setUser() {
+        isLoading.value = true
+
+        const userData = await getUser()
+        Object.assign(user, userData);
+
+        isLoading.value = false
+    }
+
+    async function getUser() {
+        return await axios.get('/api/users/me').then(r => r.data.data)
+    }
+
+
     onMounted(async () => {
         const isAuthenticated = localStorage.getItem('x_xsrf_token')
 
         if (isAuthenticated && !Object.keys(user).length) {
-            await getUser().then(r => {
-                Object.assign(user, r);
-                console.log(user, 222)
-            })
+            await setUser()
         }
     })
-
-    function setUser(value) {
-        Object.assign(user, value);
-    }
-
-    async function getUser() {
-        isLoading.value = true
-
-        const userData = await axios.get('/api/user').then(r => r.data.data)
-
-        isLoading.value = false
-
-        return userData
-    }
 
 
     return {errors, attempt, create, user, isLoading}

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!isLoading " class="bg-main-900 text-white flex flex-col h-screen">
+    <div v-if="!isLoading" class="bg-main-900 text-white flex flex-col h-screen">
         <header class="basis-[36px] flex content-end">
             <div class="text-lg mt-1.5 ml-2.5">reborn</div>
         </header>
@@ -14,9 +14,11 @@
                     </div>
                     <div
                         class="w-full px-2 py-2">
-                        <router-link :to="{name: 'chats.index'}" :class="{
-                        'bg-main-300 text-gray-100': !Boolean(route.params.id)
-                        }" class="block px-3 w-full py-2 hover:bg-main-500 rounded hover:text-gray-200">
+                        <router-link :to="{name: 'chats.index'}"
+                                     :class="{
+                                        'bg-main-300 text-gray-100': !Boolean(route.params.id)
+                                      }"
+                                     class="block px-3 w-full py-2 hover:bg-main-500 rounded hover:text-gray-200">
                             <font-awesome-icon :icon="['fas', 'user-group']" class="mr-4"/>
                             Friends
                         </router-link>
@@ -27,7 +29,7 @@
                         <button type="button" class="text-2xl hover:cursor-pointer text-gray-200">+</button>
                     </div>
                     <div class="w-full px-2 pt-5 flex flex-col space-y-0.5">
-                        <router-link v-for="chat in  user.chats" :key="chat.id"
+                        <router-link v-for="chat in  chats" :key="chat.id"
                                      :to="{name: 'chats.show', params:{id:chat.id}}"
                                      @mouseover="showCross(chat.id)"
                                      @mouseleave="hideCross"
@@ -35,9 +37,9 @@
                                      class="w-full relative py-2 px-3 flex items-center hover:bg-main-500 rounded hover:text-gray-200">
 
                             <div class="bg-white w-8 h-8 rounded-full bg-gray-200"><img class="scale-105"
-                                                                                        :src="chat.friend_thumbnail"
+                                                                                        :src="chat.friend.thumbnail"
                                                                                         alt="friend_icon"></div>
-                            <div class="ml-4  font-medium">{{ chat.friend_name }}</div>
+                            <div class="ml-4  font-medium">{{ chat.friend.name }}</div>
                             <div v-show="activeCross === chat.id" role="button"
                                  class="hover:rounded-md absolute top-3 right-3.5">✕
                             </div>
@@ -47,7 +49,7 @@
                 <div class="basis-[55px] bg-main-800 flex justify-between items-center px-5">
                     <div class="flex items-center">
                         <div class="bg-white w-8 h-8 rounded-full bg-gray-200"><img class="scale-105"
-                                                                                    src="/storage/images/profile_pictures/default.svg"
+                                                                                    :src="user.thumbnail"
                                                                                     alt="friend_icon"></div>
                         <div class="ml-4 text-gray-100 font-medium">{{ user.username }}</div>
                     </div>
@@ -79,11 +81,21 @@
 <script setup>
 import LogoIcon from "@/components/Icons/LogoIcon.vue";
 import useUser from "@/composables/user";
-import {ref} from "vue";
+import useChat from "@/composables/chat";
+import {computed, onBeforeMount, ref} from "vue";
 import {useRoute} from "vue-router";
 
 const route = useRoute()
+const {user, isLoading: isUserLoading} = useUser()
+const {chats, setChats, isLoading: isChatLoading} = useChat()
 const activeCross = ref(0)
+
+
+onBeforeMount(() => {
+    if (!chats.length) {
+        setChats()
+    }
+})
 
 function showCross(id) {
     activeCross.value = id
@@ -94,27 +106,7 @@ function hideCross() {
 }
 
 
-const {user, isLoading} = useUser()
+const isLoading = computed(() => {
+    return isChatLoading.value && isUserLoading.value && chats.length && Object.keys(user)
+})
 </script>
-
-<style lang="scss">
-.chat-block {
-    max-height: calc(100vh - 170px);
-
-    &::-webkit-scrollbar {
-        width: 7px;
-        background-color: #2b2d32;
-        border-radius: 10px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: #222427;
-        border-radius: 10px;
-    }
-}
-
-.chat-block-header {
-    z-index: 1;
-    box-shadow: 0 4px 0.3em rgba(0, 0, 0, 0.25);
-}
-</style>
