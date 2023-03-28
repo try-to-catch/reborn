@@ -3,7 +3,7 @@
 namespace App\Http\Resources\API\Chat;
 
 use App\Http\Resources\API\Message\MessageCollection;
-use App\Http\Resources\API\User\UserMinResource;
+use App\Http\Resources\API\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,7 +19,7 @@ class ChatResource extends JsonResource
         return [
             'id' => $this->id,
             'messages' => new MessageCollection($this->messages),
-            'friend' => new UserMinResource($this->users[0]),
+            'friend' => new UserResource($this->users[0]),
         ];
     }
 }

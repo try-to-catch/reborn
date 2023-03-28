@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\API\User;
 
-use App\Http\Resources\API\Chat\ChatMinCollection;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,15 +15,15 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $date = Carbon::create($this->created_at);
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'username' => $this->username,
-            'email' => $this->email,
             'bio' => $this->bio ?? null,
-            'created_at' => $this->created_at,
+            'joined_at' => $date->format('M. d, Y'),
             'thumbnail' => '/storage/'.$this->thumbnail,
-            'chats' => new ChatMinCollection($this->chats)
         ];
     }
 }
