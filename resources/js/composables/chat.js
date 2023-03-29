@@ -6,7 +6,6 @@ export default function useChat() {
     const route = useRoute()
 
     const isLoading = ref(false)
-    add
 
     onBeforeRouteUpdate(async (to, from) => {
         if (to.params.id !== from.params.id) {
@@ -63,8 +62,9 @@ export default function useChat() {
         })
     }
 
+    const isAuthenticated = localStorage.getItem('x_xsrf_token')
     watchEffect(() => {
-        if (chat.id) {
+        if (chat.id && isAuthenticated) {
             Echo.private(`chats.${chat.id}`)
                 .listen('MessageSent', (e) => {
                     chat.messages.push(e.message)
