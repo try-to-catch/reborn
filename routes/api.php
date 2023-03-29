@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\API\Chat\ChatRequestController;
 use App\Http\Controllers\API\Chat\IndexController;
 use App\Http\Controllers\API\Chat\ShowController;
 use App\Http\Controllers\API\Message\StoreController;
+use App\Http\Controllers\API\User\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,11 +19,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::middleware('auth:sanctum')->group(function (){
-    Route::get('/users/me', \App\Http\Controllers\API\User\IndexController::class);
+    Route::prefix('/users')->group(function (){
+        Route::get('/me', \App\Http\Controllers\API\User\IndexController::class);
+        Route::post('/search', SearchController::class);
+    });
+
     Route::post('/messages/{chat}', StoreController::class);
 
     Route::prefix('/chats')->group(function (){
         Route::get('/', IndexController::class);
         Route::get('/{chat}', ShowController::class);
+        Route::post('/chat-request', ChatRequestController::class);
     });
 });
