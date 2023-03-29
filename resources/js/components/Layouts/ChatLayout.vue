@@ -7,11 +7,7 @@
             <div class="bg-main-900 basis-[75px]"></div>
             <div class="bg-main-700 2xl:basis-[315px] basis-[265px] rounded-tl-2xl flex flex-col z-10">
                 <div class="grow flex flex-col items-center mt-6 text-main-text">
-                    <div class="w-full px-5 pb-4">
-                        <input type="text"
-                               class="bg-main-500 w-full h-8 rounded-[5px] px-2 focus:outline focus:outline-2 focus:outline-slate-600"
-                               placeholder="Search">
-                    </div>
+                    <SearchField v-model="searcher" class="px-2 pb-4"></SearchField>
                     <div
                         class="w-full px-2 py-2">
                         <router-link :to="{name: 'chats.index'}"
@@ -26,7 +22,7 @@
                     </div>
                     <div class="pt-4 flex justify-between w-full px-5 items-center text-sm">
                         <div>PRIVATE MESSAGES</div>
-                        <button type="button" class="text-2xl hover:cursor-pointer text-gray-200">+</button>
+                        <router-link :to="{name: 'chats.index'}" class="text-2xl hover:cursor-pointer text-gray-200">+</router-link>
                     </div>
                     <div class="w-full px-2 pt-5 flex flex-col space-y-0.5">
                         <router-link v-for="chat in  chats" :key="chat.id"
@@ -84,6 +80,7 @@ import useUser from "@/composables/user";
 import useChat from "@/composables/chat";
 import {computed, onBeforeMount, ref} from "vue";
 import {useRoute} from "vue-router";
+import SearchField from "@/components/Form/SearchField.vue";
 
 const route = useRoute()
 const {user, isLoading: isUserLoading} = useUser()
@@ -109,4 +106,6 @@ function hideCross() {
 const isLoading = computed(() => {
     return isChatLoading.value && isUserLoading.value && chats.length && Object.keys(user)
 })
+
+const searcher = ref('')
 </script>
