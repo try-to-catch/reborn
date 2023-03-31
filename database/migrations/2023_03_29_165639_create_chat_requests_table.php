@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('chat_request', function (Blueprint $table) {
+        Schema::create('chat_requests', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('user_id')
@@ -18,12 +18,12 @@ return new class extends Migration {
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->foreignId('friend_id')
+            $table->foreignId('sender_id')
                 ->constrained('users')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->boolean('was_considered');
+            $table->boolean('was_considered')->default(false);
 
             $table->timestamps();
         });
@@ -34,6 +34,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('chat_request');
+        Schema::dropIfExists('chat_requests');
     }
 };
