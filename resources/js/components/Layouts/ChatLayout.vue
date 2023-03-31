@@ -6,7 +6,7 @@
         <main class="flex bg-main-900 grow">
             <div class="bg-main-900 basis-[75px]"></div>
             <div class="bg-main-700 2xl:basis-[315px] basis-[265px] rounded-tl-2xl flex flex-col z-10">
-                <div class="grow flex flex-col items-center mt-6 text-main-text">
+                <div class="grow flex flex-col items-center pt-6 text-main-text">
                     <SearchField v-model="searcher" class="px-2 pb-4"></SearchField>
                     <div
                         class="w-full px-2 py-2">
@@ -22,7 +22,9 @@
                     </div>
                     <div class="pt-4 flex justify-between w-full px-5 items-center text-sm">
                         <div>PRIVATE MESSAGES</div>
-                        <router-link :to="{name: 'chats.index'}" class="text-2xl hover:cursor-pointer text-gray-200">+</router-link>
+                        <router-link :to="{name: 'chats.index'}" class="text-2xl hover:cursor-pointer text-gray-200">
+                            +
+                        </router-link>
                     </div>
                     <div class="w-full px-2 pt-5 flex flex-col space-y-0.5">
                         <router-link v-for="chat in  chats" :key="chat.id"

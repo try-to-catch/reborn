@@ -1,5 +1,5 @@
 <template>
-    <div class="flex grow flex-col-reverse mt-[60px]">
+    <div class="flex grow flex-col-reverse mt-[58px]">
         <ul ref="scrollContainer"
             class="chat-block space-y-6 overflow-auto px-2 2xl:px-4">
 
