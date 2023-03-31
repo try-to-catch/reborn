@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\Chat;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\Chat\ChatMinCollection;
-use App\Models\Chat;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -14,7 +13,7 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $chats = request()->user()->chats()->whereHas('messages')->select(['chats.id'])
+        $chats = request()->user()->chats()->select(['chats.id'])
             ->selectSub(function ($query) {
                 $query->from('messages')
                     ->whereColumn('messages.chat_id', 'chats.id')
