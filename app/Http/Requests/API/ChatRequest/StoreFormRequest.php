@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\API\Chat;
+namespace App\Http\Requests\API\ChatRequest;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChatFormRequest extends FormRequest
+class StoreFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
