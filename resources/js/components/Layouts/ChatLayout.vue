@@ -22,12 +22,13 @@
                     </div>
                     <div class="pt-4 flex justify-between w-full px-5 items-center text-sm">
                         <div>PRIVATE MESSAGES</div>
-                        <router-link :to="{name: 'chats.index'}" class="text-2xl hover:cursor-pointer text-gray-200">
+                        <router-link :to="{name: 'chats.index', query: {section:'add_friend'}}"
+                                     class="text-2xl hover:cursor-pointer text-gray-200">
                             +
                         </router-link>
                     </div>
                     <div class="w-full px-2 pt-5 flex flex-col space-y-0.5">
-                        <router-link v-for="chat in  chats" :key="chat.id"
+                        <router-link v-for="chat in  filteredChats" :key="chat.id"
                                      :to="{name: 'chats.show', params:{id:chat.id}}"
                                      @mouseover="showCross(chat.id)"
                                      @mouseleave="hideCross"
@@ -38,7 +39,7 @@
                                                                                         :src="chat.friend.thumbnail"
                                                                                         alt="friend_icon"></div>
                             <div class="ml-4  font-medium">{{ chat.friend.name }}</div>
-                            <div v-show="activeCross === chat.id" role="button"
+                            <div v-show="activeCross === chat.id" @click.prevent="deleteChat(chat.id)" role="button"
                                  class="hover:rounded-md absolute top-3 right-3.5">✕
                             </div>
                         </router-link>
@@ -80,13 +81,13 @@
 import LogoIcon from "@/components/Icons/LogoIcon.vue";
 import useUser from "@/composables/user";
 import useChat from "@/composables/chat";
-import {computed, onBeforeMount, ref} from "vue";
+import {computed, onBeforeMount, ref, watch, watchEffect} from "vue";
 import {useRoute} from "vue-router";
 import SearchField from "@/components/Form/SearchField.vue";
 
 const route = useRoute()
 const {user, isLoading: isUserLoading} = useUser()
-const {chats, setChats, isLoading: isChatLoading} = useChat()
+const {chats, setChats, isLoading: isChatLoading, deleteChat} = useChat()
 const activeCross = ref(0)
 
 
@@ -109,5 +110,16 @@ const isLoading = computed(() => {
     return isChatLoading.value && isUserLoading.value && chats.length && Object.keys(user)
 })
 
+
 const searcher = ref('')
+const filteredChats = ref([])
+
+watchEffect(() => {
+    if (chats.value) {
+        filteredChats.value = chats.value.filter((item) => {
+            return item.friend.username.includes(searcher.value)
+        })
+    }
+})
+
 </script>
