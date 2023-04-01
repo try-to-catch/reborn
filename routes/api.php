@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\API\Chat\DestroyController;
 use App\Http\Controllers\API\Chat\IndexController;
 use App\Http\Controllers\API\Chat\ShowController;
+use App\Http\Controllers\API\ChatRequest\UpdateController;
 use App\Http\Controllers\API\Message\StoreController;
 use App\Http\Controllers\API\User\SearchController;
 use Illuminate\Support\Facades\Route;
@@ -28,10 +30,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('/chat-requests')->group(function () {
             Route::get('/', \App\Http\Controllers\API\ChatRequest\IndexController::class);
             Route::post('/', \App\Http\Controllers\API\ChatRequest\StoreController::class);
-            Route::patch('/{chatRequest}', \App\Http\Controllers\API\ChatRequest\UpdateController::class);
+            Route::patch('/{chatRequest}', UpdateController::class);
         });
 
         Route::get('/', IndexController::class);
         Route::get('/{chat}', ShowController::class);
+        Route::delete('/{chat}', DestroyController::class);
     });
 });
