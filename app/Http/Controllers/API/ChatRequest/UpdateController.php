@@ -16,10 +16,12 @@ class UpdateController extends Controller
         $chatRequest->was_considered = true;
         $chatRequest->save();
 
-        $chat = Chat::create();
+        if ($data['is_accept']){
+            $chat = Chat::create();
 
-        request()->user()->chats()->attach($chat);
-        User::find($data['sender_id'])->chats()->attach($chat);
+            request()->user()->chats()->attach($chat);
+            User::find($data['sender_id'])->chats()->attach($chat);
+        }
 
         return response()->json(['message' => 'OK']);
     }
