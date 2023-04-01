@@ -1,6 +1,6 @@
 <template>
     <div class="w-full relative">
-        <input @change="$emit('update:modelValue', $event.target.value)" type="text"
+        <input @input="$emit('update:modelValue', $event.target.value)" type="text"
                :class="[this.classes]"
                class="w-full h-8 rounded-[5px] px-2 focus:outline focus:outline-2 focus:outline-slate-600 bg-main-500"
                :placeholder="placeholder">
