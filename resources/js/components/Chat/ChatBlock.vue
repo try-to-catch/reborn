@@ -6,13 +6,13 @@
             <MessageGroup v-for="messageGroup in preparedChat" :key="messageGroup.id" :messages="messageGroup"
                           :user="props.user" :friend="props.chat.friend"></MessageGroup>
             <li v-if="pendingMessages?.length"
-                :style="{'margin-top':lastMessage.user_id===user.id?'0':'24px'} " class="flex">
-                <div :class="{ invisible: lastMessage.user_id===user.id }"
+                :style="messageStyles" class="flex">
+                <div :class="{ invisible: lastMessage?.user_id===user.id, 'h-0': lastMessage?.user_id===user.id}"
                      class="bg-white w-[44px] h-[44px] rounded-full bg-gray-200">
                     <img :src="user.thumbnail" alt="user_icon">
                 </div>
                 <div class="ml-2">
-                    <div v-show="lastMessage.user_id!==user.id" class="text-md">
+                    <div v-show="lastMessage?.user_id!==user.id" class="text-md">
                         {{ user.name }}
 
                         <span class="ml-2 text-zinc-500" style="font-size: 11px">just now</span>
@@ -88,6 +88,12 @@ function updateScrollHeight() {
     scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight - scrollContainer.value.clientHeight;
 }
 
+const messageStyles = computed(() => {
+    return {
+        'margin-top': lastMessage.value?.user_id === props.user.id ? '0' : '24px',
+        'margin-bottom': lastMessage.value?.user_id === props.user.id ? '0' : '24px'
+    };
+})
 
 </script>
 

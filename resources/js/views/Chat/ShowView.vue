@@ -11,8 +11,8 @@
                 <ChatBlock :user="user" :chat="chat" :pendingMessages="pendingMessages"></ChatBlock>
                 <form @submit.prevent="sendMessage" class="basis-10 py-5 w-full flex px-2 2xl:px-4">
                     <textarea @keydown.enter.prevent="sendMessage" v-model="newMessage" tabindex="0"
-                              class="w-full h-auto bg-main-300 rounded-[5px] outline-none px-3 min-h-[36px] max-h-[200px] pt-1.5 resize-none border-0 focus:ring-0 focus-visible:ring-0 overflow-y-hidden"
-                              rows="1"></textarea>
+                              class="w-full h-auto bg-main-300 rounded-[5px] outline-none text-sm px-3 min-h-[36px] max-h-[200px] pt-2 resize-none border-0 focus:ring-0 focus-visible:ring-0 overflow-y-hidden"
+                              rows="1" placeholder="Send message..."></textarea>
                     <button
                         type="submit"
                         class=" ml-2 bg-main-700 rounded-[5px] h-[36px] px-8 flex items-center text-gray-200 font-medium 2xl:hidden">
