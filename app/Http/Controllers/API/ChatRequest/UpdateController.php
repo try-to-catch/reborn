@@ -7,11 +7,14 @@ use App\Http\Requests\API\ChatRequest\UpdateFormRequest;
 use App\Models\Chat;
 use App\Models\ChatRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class UpdateController extends Controller
 {
     public function __invoke(UpdateFormRequest $request, ChatRequest $chatRequest)
     {
+        Gate::authorize('update', $chatRequest);
+
         $data = $request->validated();
         $chatRequest->was_considered = true;
         $chatRequest->save();
