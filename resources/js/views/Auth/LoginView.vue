@@ -10,7 +10,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-start">
                     <div class="flex items-center h-5">
-                        <input id="remember" aria-describedby="remember" type="checkbox"
+                        <input v-model="credentials.remember_me" id="remember" aria-describedby="remember" type="checkbox"
                                class="w-4 h-4 border rounded focus:ring-3 bg-main-700 border-gray-600 focus:ring-primary-600 ring-offset-gray-800"
                         >
                     </div>
@@ -52,6 +52,7 @@ export default {
         const credentials = reactive({
             email: '',
             password: '',
+            remember_me: false,
         })
 
 

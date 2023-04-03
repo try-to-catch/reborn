@@ -12,8 +12,12 @@ class LoginController extends Controller
 {
     public function __invoke(LoginFormRequest $request): JsonResponse|UserResource
     {
+        $credentials = $request->validated();
+        $remember = $credentials['remember_me'];
 
-        if (Auth::attempt($request->validated())) {
+        unset($credentials['remember_me']);
+
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
             return new UserResource(auth()->user());
