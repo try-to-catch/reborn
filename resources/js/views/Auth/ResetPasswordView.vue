@@ -20,8 +20,8 @@
 import AuthLayout from "@/components/Layouts/AuthLayout.vue";
 import GrayButton from "@/components/Buttons/GrayButton.vue";
 import useUser from "@/composables/user";
-import {computed, reactive} from "vue";
 import DefaultInput from "@/components/Form/DefaultInput.vue";
+import {computed, reactive} from "vue";
 import {useRoute, useRouter} from "vue-router";
 
 

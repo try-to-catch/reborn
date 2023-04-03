@@ -23,8 +23,8 @@
 import AuthLayout from "@/components/Layouts/AuthLayout.vue";
 import GrayButton from "@/components/Buttons/GrayButton.vue";
 import useUser from "@/composables/user";
-import {computed, ref} from "vue";
 import DefaultInput from "@/components/Form/DefaultInput.vue";
+import {computed, ref} from "vue";
 
 
 export default {
