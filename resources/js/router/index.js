@@ -38,6 +38,22 @@ const routes = [
             middleware: 'guest'
         }
     },
+    {
+        path: '/forgot-password',
+        component: () => import("@/views/Auth/ForgotPasswordView.vue"),
+        name: 'forgotPassword',
+        meta: {
+            middleware: 'guest'
+        }
+    },
+    {
+        path: '/reset-password/:token',
+        component: () => import("@/views/Auth/ResetPasswordView.vue"),
+        name: 'resetPassword',
+        meta: {
+            middleware: 'guest'
+        }
+    },
 ]
 
 const router = createRouter({history: createWebHistory(), routes})
