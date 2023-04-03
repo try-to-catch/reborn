@@ -18,8 +18,10 @@
                         <label for="remember" class="text-gray-300">Remember me</label>
                     </div>
                 </div>
-                <a href="#" class="text-sm font-medium hover:underline text-gray-300">Forgot
-                    password?</a>
+                <router-link :to="{name: 'forgotPassword'}"
+                             class="text-sm font-medium hover:underline text-gray-300">
+                    Forgot password?
+                </router-link>
             </div>
             <gray-button :isDisabled="!isFilled">
                 Sign in
