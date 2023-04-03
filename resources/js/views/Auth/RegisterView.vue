@@ -18,13 +18,6 @@
                            placeholder="••••••••" :showErrors="false" :errors="errors.password">
                 Confirm password
             </default-input>
-            <!--            <div>-->
-            <!--                <label for="password_confirmation"-->
-            <!--                       class="block mb-2 text-sm font-medium text-white">Confirm password</label>-->
-            <!--                <input v-model.trim="credentials.password_confirmation" type="password" id="password_confirmation" placeholder="••••••••"-->
-            <!--                       class="border sm:text-sm rounded-lg block w-full p-2.5 bg-main-700 border-main-300 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-main-500"-->
-            <!--                       required="">-->
-            <!--            </div>-->
             <div class="flex items-center justify-between">
                 <div class="flex items-start">
                     <div class="flex items-center h-5">
