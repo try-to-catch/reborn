@@ -25,15 +25,23 @@ export default function useUser() {
             })
     }
 
+    async function forgotPassword(email) {
+        return await axios.post('/forgot-password', {email}).then(response => response.status === 200)
+    }
+
+    async function resetPassword(credentials) {
+        return await axios.post('/reset-password', credentials).then(response => response.status === 200)
+    }
+
     function handleFulfilled(response) {
         localStorage.setItem('x_xsrf_token', response.config.headers['X-XSRF-TOKEN'])
 
-        Object.assign(user, response.data.data);
-        router.push({name: 'chats.index'});
+        Object.assign(user, response.data.data)
+        router.push({name: 'chats.index'})
     }
 
     function handleReject(e) {
-        errors.value = e.response.data.errors;
+        errors.value = e.response.data.errors
     }
 
 
@@ -43,7 +51,7 @@ export default function useUser() {
         isLoading.value = true
 
         const userData = await getUser()
-        Object.assign(user, userData);
+        Object.assign(user, userData)
 
         isLoading.value = false
     }
@@ -62,5 +70,5 @@ export default function useUser() {
     })
 
 
-    return {errors, attempt, create, user, isLoading}
+    return {errors, attempt, create, user, isLoading, forgotPassword, resetPassword}
 }
