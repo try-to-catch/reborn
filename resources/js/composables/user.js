@@ -25,23 +25,32 @@ export default function useUser() {
             })
     }
 
-    async function forgotPassword(email) {
-        return await axios.post('/forgot-password', {email}).then(response => response.status === 200)
-    }
-
-    async function resetPassword(credentials) {
-        return await axios.post('/reset-password', credentials).then(response => response.status === 200)
-    }
-
-    function handleFulfilled(response) {
+    async function handleFulfilled(response) {
         localStorage.setItem('x_xsrf_token', response.config.headers['X-XSRF-TOKEN'])
 
         Object.assign(user, response.data.data)
-        router.push({name: 'chats.index'})
+        await router.push({name: 'chats.index'})
     }
 
     function handleReject(e) {
         errors.value = e.response.data.errors
+    }
+
+
+    async function forgotPassword(email) {
+        return await axios.post('/forgot-password', {email})
+    }
+
+    async function resetPassword(credentials) {
+        return await axios.post('/reset-password', credentials)
+    }
+
+    async function logout() {
+        await axios.post('/logout')
+
+        localStorage.removeItem('x_xsrf_token')
+
+        await router.push({name: 'login'})
     }
 
 
@@ -61,14 +70,16 @@ export default function useUser() {
     }
 
 
-    onMounted(async () => {
-        const isAuthenticated = localStorage.getItem('x_xsrf_token')
+    const isAuthenticated = ref()
 
-        if (isAuthenticated && !Object.keys(user).length) {
+    onMounted(async () => {
+        isAuthenticated.value = localStorage.getItem('x_xsrf_token')
+
+        if (isAuthenticated.value && !Object.keys(user).length) {
             await setUser()
         }
     })
 
 
-    return {errors, attempt, create, user, isLoading, forgotPassword, resetPassword}
+    return {errors, attempt, create, user, isLoading, forgotPassword, resetPassword, isAuthenticated, logout}
 }
