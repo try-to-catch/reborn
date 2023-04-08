@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\RegisterFormRequest;
 use App\Http\Resources\API\User\UserResource;
 use App\Models\User;
 use Exception;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -26,6 +27,8 @@ class RegisterController extends Controller
         } catch (Exception $e) {
             return response()->json($e, 401);
         }
+
+        event(new Registered($user));
 
         return new UserResource($user);
     }
