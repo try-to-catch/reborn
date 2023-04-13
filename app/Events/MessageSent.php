@@ -4,7 +4,6 @@ namespace App\Events;
 
 use App\Models\Chat;
 use App\Models\Message;
-use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -40,7 +39,7 @@ class MessageSent implements ShouldBroadcast
 
     public function broadcastWith(): array
     {
-        $date = Carbon::create($this->message->created_at);
+        $date = $this->message->created_at;
         $formattedDate = $date->isToday()
             ? 'Today, in ' . $date->format('H:i')
             : $date->format('d.m.Y H:i');

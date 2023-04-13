@@ -1,6 +1,10 @@
 <template>
-    <ChatLayout>
-        <template v-if="!isLoading" #middleSection="{user}">
+    <div class="bg-main-500 grow flex flex-col relative">
+        <loading v-if="isLoading" v-model:active="isLoading" :is-full-page="false" background-color="#2C2F33"
+                 :opacity="1"
+                 color="#d1d5db"></loading>
+
+        <template v-else>
             <div
                 class="chat-block-header border-b border-main-900 h-14 absolute inset-x-0 top-0 bg-main-500 flex items-center px-3">
                 <font-awesome-icon :icon="['fas', 'at']" class=" text-gray-400 font-light text-xl"/>
@@ -21,14 +25,13 @@
                 </form>
             </div>
         </template>
+    </div>
 
-        <template v-else #middleSection class="w-full h-full flex items-center justify-center">
-            <loading v-model:active="isLoading" :is-full-page="false" background-color="#2C2F33" :opacity="1"
-                     color="#d1d5db"></loading>
-        </template>
 
-        <template v-if="chat.friend && !isLoading" #rightSection>
-            <div class="bg-white w-24 h-24 rounded-full bg-gray-200 mt-10">
+    <div class="bg-main-700 2xl:basis-[315px] basis-[265px] hidden xl:flex xl:flex-col px-5 z-10 relative">
+
+        <template v-if="!isLoading && chat.friend">
+            <div class="w-24 h-24 rounded-full bg-gray-200 mt-10">
                 <img :src="chat.friend.thumbnail" alt="friend_icon">
             </div>
             <div class="mt-4 bg-main-800 w-full rounded-[5px] p-3">
@@ -46,14 +49,14 @@
                 </div>
             </div>
         </template>
-    </ChatLayout>
+
+    </div>
 
 </template>
 
 <script setup>
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
-import ChatLayout from "@/components/Layouts/ChatLayout.vue";
 import useChat from "@/composables/chat";
 import {computed, onBeforeMount, ref} from "vue";
 import ChatBlock from "@/components/Chat/ChatBlock.vue";
@@ -63,11 +66,15 @@ const {chat, setChat, isLoading, createMessage, pendingMessages} = useChat()
 
 onBeforeMount(setChat)
 
+const props = defineProps({
+    user: {type: Object, required: true}
+})
 const preparedUsername = computed(() => {
     return chat.friend?.username.slice(1) || '';
 })
 
 const newMessage = ref('')
+
 function sendMessage() {
     if (newMessage.value.length) {
         createMessage(newMessage.value)

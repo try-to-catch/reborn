@@ -8,7 +8,7 @@ export default function useChat() {
     const isLoading = ref(false)
     onBeforeRouteUpdate(async (to, from) => {
         if (to.params.id !== from.params.id) {
-            await setChat(to.params.id)
+            setChat(to.params.id)
         }
     })
 
