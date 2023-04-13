@@ -8,19 +8,23 @@ const routes = [
     },
     {
         path: '/chats',
-        component: () => import("@/views/Chat/IndexView.vue"),
-        name: 'chats.index',
+        component: () => import("@/views/Chat/ChatApp.vue"),
+        props: route => ({routeId: parseInt(route.params.id) || 0}),
         meta: {
             middleware: 'auth'
-        }
-    },
-    {
-        path: '/chats/:id',
-        component: () => import("@/views/Chat/ShowView.vue"),
-        name: 'chats.show',
-        meta: {
-            middleware: 'auth'
-        }
+        },
+        children: [
+            {
+                path: '',
+                component: () => import("@/views/Chat/IndexView.vue"),
+                name: 'chats.index',
+            },
+            {
+                path: ':id',
+                component: () => import("@/views/Chat/ShowView.vue"),
+                name: 'chats.show',
+            }
+        ]
     },
     {
         path: '/login',
