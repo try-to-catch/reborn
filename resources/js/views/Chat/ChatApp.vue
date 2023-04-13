@@ -12,7 +12,7 @@
                         class="w-full px-2 py-2">
                         <router-link :to="{name: 'chats.index'}"
                                      :class="{
-                                        'bg-main-300 text-gray-100': !Boolean(route.params.id)
+                                        'bg-main-300 text-gray-100': routeId === 0
                                       }"
                                      class="block px-3 w-full py-2 hover:bg-main-500 rounded hover:text-gray-200">
                             <font-awesome-icon :icon="['fas', 'user-group']" class="mr-4"/>
@@ -27,17 +27,16 @@
                             +
                         </router-link>
                     </div>
-                    <div class="w-full px-2 pt-5 flex flex-col space-y-0.5">
+                    <div class="w-full px-2 pt-5 flex flex-col space-y-0.5" id="chats-block">
                         <router-link v-for="chat in  filteredChats" :key="chat.id"
                                      :to="{name: 'chats.show', params:{id:chat.id}}"
                                      @mouseover="showCross(chat.id)"
                                      @mouseleave="hideCross"
-                                     :class="{'bg-main-300 text-gray-100': Number(route.params.id) === chat.id}"
                                      class="w-full relative py-2 px-3 flex items-center hover:bg-main-500 rounded hover:text-gray-200">
 
-                            <div class="bg-white w-8 h-8 rounded-full bg-gray-200"><img class="scale-105"
-                                                                                        :src="chat.friend.thumbnail"
-                                                                                        alt="friend_icon"></div>
+                            <div class="w-8 h-8 rounded-full bg-gray-200"><img class="scale-105"
+                                                                               :src="chat.friend.thumbnail"
+                                                                               alt="friend_icon"></div>
                             <div class="ml-4  font-medium">{{ chat.friend.name }}</div>
                             <div v-show="activeCross === chat.id" @click.prevent="deleteChat(chat.id)" role="button"
                                  class="hover:rounded-md absolute top-3 right-3.5">✕
@@ -45,11 +44,12 @@
                         </router-link>
                     </div>
                 </div>
-                <div class="basis-[55px] bg-main-800 flex justify-between items-center px-5">
+                <div v-if="!isLoading && user.thumbnail"
+                     class="basis-[55px] bg-main-800 flex justify-between items-center px-5">
                     <div class="flex items-center">
-                        <div class="bg-white w-8 h-8 rounded-full bg-gray-200"><img class="scale-105"
-                                                                                    :src="user.thumbnail"
-                                                                                    alt="friend_icon"></div>
+                        <div class="w-8 h-8 rounded-full bg-gray-200"><img class="scale-105"
+                                                                           :src="user.thumbnail"
+                                                                           alt="friend_icon"></div>
                         <div class="ml-4 text-gray-100 font-medium">{{ user.username }}</div>
                     </div>
                     <button type="button">
@@ -57,11 +57,8 @@
                     </button>
                 </div>
             </div>
-            <div class="bg-main-500 grow flex flex-col relative">
-                <slot name="middleSection" :user="user"/>
-            </div>
-            <div class="bg-main-700 2xl:basis-[315px] basis-[265px] hidden xl:flex xl:flex-col px-5 z-10">
-                <slot name="rightSection" :user="user"/>
+            <div class="flex grow">
+                <router-view :user="user"></router-view>
             </div>
         </main>
     </div>
@@ -81,11 +78,9 @@
 import LogoIcon from "@/components/Icons/LogoIcon.vue";
 import useUser from "@/composables/user";
 import useChat from "@/composables/chat";
-import {computed, onBeforeMount, ref, watch, watchEffect} from "vue";
-import {useRoute} from "vue-router";
+import {computed, onBeforeMount, ref, watchEffect} from "vue";
 import SearchField from "@/components/Form/SearchField.vue";
 
-const route = useRoute()
 const {user, isLoading: isUserLoading} = useUser()
 const {chats, setChats, isLoading: isChatLoading, deleteChat} = useChat()
 const activeCross = ref(0)
@@ -95,6 +90,10 @@ onBeforeMount(() => {
     if (!chats.length) {
         setChats()
     }
+})
+
+const props = defineProps({
+    routeId: {type: Number, required: true}
 })
 
 function showCross(id) {
@@ -123,3 +122,10 @@ watchEffect(() => {
 })
 
 </script>
+
+
+<style>
+#chats-block .router-link-active {
+    @apply bg-main-300 text-gray-100;
+}
+</style>
