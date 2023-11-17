@@ -19,20 +19,22 @@ export default function useUser() {
 
 
     async function create(credentials) {
+        console.log('create', credentials)
         await axios.get('/sanctum/csrf-cookie')
             .then(() => {
                 axios.post('/sign-up', credentials).then(handleFulfilled, handleReject)
             })
     }
 
-    async function handleFulfilled(response) {
+    function handleFulfilled(response) {
         localStorage.setItem('x_xsrf_token', response.config.headers['X-XSRF-TOKEN'])
-
+        console.log('handleFulfilled', response.data.data);
         Object.assign(user, response.data.data)
-        await router.push({name: 'chats.index'})
+        router.push({name: 'chats.index'})
     }
 
     function handleReject(e) {
+        console.log('handleReject', e.response.data.errors);
         errors.value = e.response.data.errors
     }
 

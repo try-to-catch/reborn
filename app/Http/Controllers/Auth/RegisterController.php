@@ -28,7 +28,12 @@ class RegisterController extends Controller
             return response()->json($e, 401);
         }
 
-        event(new Registered($user));
+        try {
+            event(new Registered($user));
+        }
+        catch(Exception $e) {
+            error_log($e->getMessage());
+        }
 
         return new UserResource($user);
     }
