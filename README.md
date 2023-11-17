@@ -45,7 +45,7 @@ Run migrations:
 ```
     php artisan migrate
 ```
-*(optional) Run local server and queue worker:*
+*(dev mode) Run local server and queue worker:*
 ```
 npm run dev
 php artisan serve
